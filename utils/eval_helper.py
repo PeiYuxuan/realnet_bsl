@@ -57,7 +57,7 @@ class EvalImage:
 
     def encode_mask(self, masks):
         N, _, _ = masks.shape
-        masks = (masks.reshape(N, -1).sum(axis=1) != 0).astype(np.int)  # (N, )
+        masks = (masks.reshape(N, -1).sum(axis=1) != 0).astype(int)  # (N, )
         return masks
 
     def eval_auc(self):
@@ -108,7 +108,7 @@ class EvalPixelPro:
             [np.expand_dims(mask,axis=0)  for mask in data_meta.masks], axis=0
         )
         self.masks[self.masks > 0] = 1
-        self.masks=self.masks.astype(np.bool)
+        self.masks=self.masks.astype(bool)
 
     def rescale(self,x):
         return (x - x.min()) / (x.max() - x.min())
@@ -128,7 +128,7 @@ class EvalPixelPro:
         threds = []
         fprs = []
 
-        binary_score_maps = np.zeros_like(self.preds, dtype=np.bool)
+        binary_score_maps = np.zeros_like(self.preds, dtype=bool)
 
         for step in range(max_step):
             thred = max_th - step * delta
