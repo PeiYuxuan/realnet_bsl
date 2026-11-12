@@ -150,8 +150,8 @@ def validate(config,val_loader, model,class_name):
             preds.append(outputs["anomaly_score"].cpu().numpy())
             masks.append(outputs["mask"].cpu().numpy())
 
-    preds = np.squeeze(np.concatenate(np.asarray(preds), axis=0),axis=1)  # N x H x W
-    masks = np.squeeze(np.concatenate(np.asarray(masks), axis=0),axis=1)  # N x H x W
+    preds = np.squeeze(np.concatenate(preds, axis=0),axis=1)  # N x H x W
+    masks = np.squeeze(np.concatenate(masks, axis=0),axis=1)  # N x H x W
 
     ret_metrics = performances(class_name, preds, masks, config.evaluator.metrics)
 
